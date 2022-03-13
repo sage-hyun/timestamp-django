@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book_title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'book/style.css' %}">
+</head>
+<body>
+    <h1>{{ book_title }}</h1>
+    <audio src="{{book_filepath}}" id="myAudio" controls></audio>
+
+    <div id="currentTime">00:00:00</div>
+    <div>
+        <h3>Bookmark</h3>
+        <button>add</button>
+    </div>
+
+    <div>
+        <h3>Favorite</h3>
+        <button>add</button>
+    </div>
+
+    <div>
+        <h3>Memo</h3>
+        <button>add</button>
+    </div>
+    
+    <script>
+        const myAudio = document.getElementById("myAudio"); // Audio객체 취득
+        const currentTimeText = document.getElementById("currentTime");
+        
+        function formatSecondsAsTime(secs) {
+            var hr  = Math.floor(secs / 3600);
+            var min = Math.floor((secs - (hr * 3600))/60);
+            var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+
+            if (hr < 10){ 
+                hr = "0" + hr; 
+            }
+            if (min < 10){ 
+                min = "0" + min; 
+            }
+            if (sec < 10){ 
+                sec  = "0" + sec;
+            }
+
+            return hr + ':' + min + ':' + sec;
+        }
+
+        myAudio.addEventListener('timeupdate', ()=>{
+            var currentTime = Math.floor(myAudio.currentTime).toString();
+            currentTimeText.innerHTML = formatSecondsAsTime(currentTime);
+        });
+    </script>
+
+    <script type="module" src="{% static 'book/main.js' %}"></script>
+
+    </body>
+</html>

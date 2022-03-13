@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp For Anything!</title>
+</head>
+<body>
+    <h1>Book</h1>
+    {% if book_list %}
+        <ul>
+        {% for book in book_list %}
+            <li><a href="/book/{{ book.id }}/">{{ book.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books are available.</p>
+    {% endif %}
+    
+    <h1>Song</h1>
+    {% if song_list %}
+        <ul>
+        {% for song in song_list %}
+            <li><a href="/song/{{ song.id }}/">{{ song.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No songs are available.</p>
+    {% endif %}
+    
+
+    </body>
+</html>
