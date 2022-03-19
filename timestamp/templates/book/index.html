@@ -17,7 +17,12 @@
     <div id="currentTime">00:00:00</div>
     <div>
         <h3>Bookmark</h3>
-        <button>add</button>
+        <form method="post" action="{% url 'bookmark' %}"> 
+            {% csrf_token %}
+            <input type="hidden" name="audio_id" value="{{ audio_id }}"></input>
+            <input type="hidden" name="second" class="second" value="0"></input>
+            <p><input type="submit" value="add"></p>
+        </form>
     </div>
 
     <div>
@@ -32,6 +37,7 @@
     
     <script>
         const myAudio = document.getElementById("myAudio"); // Audio객체 취득
+        const currentTimeSec = document.querySelectorAll("input.second");
         const currentTimeText = document.getElementById("currentTime");
         
         function formatSecondsAsTime(secs) {
@@ -55,6 +61,8 @@
         myAudio.addEventListener('timeupdate', ()=>{
             var currentTime = Math.floor(myAudio.currentTime).toString();
             currentTimeText.innerHTML = formatSecondsAsTime(currentTime);
+            
+            currentTimeSec.forEach(elem => {elem.value = currentTime});
         });
     </script>
 
