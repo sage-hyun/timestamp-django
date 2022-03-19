@@ -31,7 +31,17 @@ def song(request, song_id):
     return render(request, 'song/index.html', context)
 
 def bookmark(request):
-    pass
+    if request.method == 'POST':
+        second = request.POST['second']
+        audio_id =request.POST['audio_id']
+
+        data = Timestamp(
+            second=second,
+            audio_id=Audio.objects.get(id=audio_id),
+            stamp_type="BOOKMARK")
+        data.save()
+
+        return JsonResponse({"message":"Successfully saved."})
 
 def favorite(request):
     pass
