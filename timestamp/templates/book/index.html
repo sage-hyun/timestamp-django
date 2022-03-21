@@ -17,12 +17,7 @@
     <div id="currentTime">00:00:00</div>
     <div>
         <h3>Bookmark</h3>
-        <form method="post" action="{% url 'bookmark' %}"> 
-            {% csrf_token %}
-            <input type="hidden" name="audio_id" value="{{ audio_id }}"></input>
-            <input type="hidden" name="second" class="second" value="0"></input>
-            <p><input type="submit" value="add"></p>
-        </form>
+        <button id="bookmark-add-btn">add</button>
     </div>
 
     <div>
@@ -37,8 +32,6 @@
     
     <script>
         const myAudio = document.getElementById("myAudio"); // Audio객체 취득
-        const currentTimeSec = document.querySelectorAll("input.second");
-        const currentTimeText = document.getElementById("currentTime");
         
         function formatSecondsAsTime(secs) {
             var hr  = Math.floor(secs / 3600);
@@ -59,11 +52,27 @@
         }
 
         myAudio.addEventListener('timeupdate', ()=>{
-            var currentTime = Math.floor(myAudio.currentTime).toString();
-            currentTimeText.innerHTML = formatSecondsAsTime(currentTime);
-            
-            currentTimeSec.forEach(elem => {elem.value = currentTime});
+            const currentTimeText = document.getElementById("currentTime");
+            currentTimeText.innerHTML = formatSecondsAsTime(myAudio.currentTime);
         });
+         
+        const add_bookmark = document.getElementById("bookmark-add-btn");
+        add_bookmark.onclick = () => {
+            fetch("{% url 'bookmark' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": '{{csrf_token}}',
+                },
+                body: JSON.stringify({
+                    audio_id: parseInt('{{ audio_id }}'),
+                    second: Math.floor(myAudio.currentTime),
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+            });
+        }
     </script>
 
     <script type="module" src="{% static 'book/main.js' %}"></script>

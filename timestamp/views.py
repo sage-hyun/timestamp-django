@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Audio, Timestamp
+import json
 
 # Create your views here.
 def index(request):
@@ -32,8 +33,9 @@ def song(request, song_id):
 
 def bookmark(request):
     if request.method == 'POST':
-        second = request.POST['second']
-        audio_id =request.POST['audio_id']
+        received_json_data = json.loads(request.body)
+        second = received_json_data['second']
+        audio_id = received_json_data['audio_id']
 
         data = Timestamp(
             second=second,
@@ -41,7 +43,11 @@ def bookmark(request):
             stamp_type="BOOKMARK")
         data.save()
 
-        return JsonResponse({"message":"Successfully saved."})
+        return JsonResponse({
+            "message":"Successfully saved.",
+            "timestamp_id": data.id,
+            "second":second,
+        })
 
 def favorite(request):
     pass
