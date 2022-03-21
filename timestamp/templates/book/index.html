@@ -18,6 +18,14 @@
     <div>
         <h3>Bookmark</h3>
         <button id="bookmark-add-btn">add</button>
+        <ul class="bookmark">
+            {% for ts in timestamps %}
+                <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
+                    <button class="play-btn">play</button>
+                    <button class="del-btn">del</button>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div>
@@ -56,6 +64,14 @@
             currentTimeText.innerHTML = formatSecondsAsTime(myAudio.currentTime);
         });
          
+
+        const li_all = document.querySelectorAll("li");
+        li_all.forEach(li => {
+            var second = parseInt(li.getAttribute("data-second"));
+            var timestamp_str = formatSecondsAsTime(second);
+            li.prepend(document.createTextNode(timestamp_str));
+        });
+                    
         const add_bookmark = document.getElementById("bookmark-add-btn");
         add_bookmark.onclick = () => {
             fetch("{% url 'bookmark' %}", {
@@ -71,6 +87,24 @@
             })
             .then((response) => response.json())
             .then((data) => {
+                var ul = document.querySelector("ul.bookmark");
+
+                var li = document.createElement("li");
+                li.setAttribute("data-id", data.timestamp_id);
+                li.setAttribute("data-second", data.second);
+
+                var play_btn = document.createElement("button");
+                play_btn.setAttribute("class", "play-btn");
+                play_btn.innerHTML = "play";
+                
+                var del_btn = document.createElement("button");
+                del_btn.setAttribute("class", "del-btn");
+                del_btn.innerHTML = "del";
+
+                li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
+                li.appendChild(play_btn);
+                li.appendChild(del_btn);
+                ul.appendChild(li);
             });
         }
     </script>
