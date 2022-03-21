@@ -21,7 +21,7 @@
         <ul class="bookmark">
             {% for ts in timestamps %}
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
-                    <button class="play-btn">play</button>
+                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
                     <button class="del-btn">del</button>
                 </li>
             {% endfor %}
@@ -64,6 +64,9 @@
             currentTimeText.innerHTML = formatSecondsAsTime(myAudio.currentTime);
         });
          
+        function play_second(sec){
+            myAudio.currentTime = parseInt(sec);
+        }
 
         const li_all = document.querySelectorAll("li");
         li_all.forEach(li => {
@@ -96,6 +99,9 @@
                 var play_btn = document.createElement("button");
                 play_btn.setAttribute("class", "play-btn");
                 play_btn.innerHTML = "play";
+                play_btn.onclick = () => {
+                    play_second(this.parentElement.getAttribute("data-second"))
+                };
                 
                 var del_btn = document.createElement("button");
                 del_btn.setAttribute("class", "del-btn");
