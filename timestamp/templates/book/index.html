@@ -100,7 +100,7 @@
                 play_btn.setAttribute("class", "play-btn");
                 play_btn.innerHTML = "play";
                 play_btn.onclick = () => {
-                    play_second(this.parentElement.getAttribute("data-second"))
+                    play_second(play_btn.parentElement.getAttribute("data-second"));
                 };
                 
                 var del_btn = document.createElement("button");
