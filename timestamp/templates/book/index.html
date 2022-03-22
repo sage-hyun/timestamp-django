@@ -61,20 +61,10 @@
         const myAudio = document.getElementById("myAudio"); // Audio객체 취득
         
         function formatSecondsAsTime(secs) {
-            var hr  = Math.floor(secs / 3600);
-            var min = Math.floor((secs - (hr * 3600))/60);
-            var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
-
-            if (hr < 10){ 
-                hr = "0" + hr; 
-            }
-            if (min < 10){ 
-                min = "0" + min; 
-            }
-            if (sec < 10){ 
-                sec  = "0" + sec;
-            }
-
+            var hr  = String(Math.floor(secs / 3600)).padStart(2, '0');
+            var min = String(Math.floor((secs - (hr * 3600))/60)).padStart(2, '0');
+            var sec = String(Math.floor(secs - (hr * 3600) -  (min * 60))).padStart(2, '0');
+            
             return hr + ':' + min + ':' + sec;
         }
 
