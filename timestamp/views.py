@@ -17,7 +17,9 @@ def book(request, book_id):
         'audio_id': book_id,
         'book_title': book.title,
         'book_filepath': book.filepath,
-        'timestamps': Timestamp.objects.filter(audio_id=book_id)
+        'bookmarks': Timestamp.objects.filter(audio_id=book_id, stamp_type="BOOKMARK"),
+        'favorites': Timestamp.objects.filter(audio_id=book_id, stamp_type="FAVORITE"),
+        'memos': Timestamp.objects.filter(audio_id=book_id, stamp_type="MEMO"),
     }
     return render(request, 'book/index.html', context)
 
@@ -31,16 +33,18 @@ def song(request, song_id):
     }
     return render(request, 'song/index.html', context)
 
-def bookmark(request):
+
+def timestamp(request, timestamp_id=None):
     if request.method == 'POST':
         received_json_data = json.loads(request.body)
         second = received_json_data['second']
         audio_id = received_json_data['audio_id']
+        stamp_type = received_json_data['stamp_type']
 
         data = Timestamp(
             second=second,
             audio_id=Audio.objects.get(id=audio_id),
-            stamp_type="BOOKMARK")
+            stamp_type=stamp_type)
         data.save()
 
         return JsonResponse({
@@ -48,20 +52,7 @@ def bookmark(request):
             "timestamp_id": data.id,
             "second":second,
         })
-
-def favorite(request):
-    pass
-
-def toc(request):
-    pass
-
-def memo(request):
-    pass
-
-def marker(request):
-    pass
-
-def timestamp(request, timestamp_id):
+    
     if request.method == 'DELETE':
         ts = Timestamp.objects.get(id=timestamp_id)
         ts.delete()
