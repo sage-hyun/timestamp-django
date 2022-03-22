@@ -51,6 +51,7 @@ def timestamp(request, timestamp_id=None):
             "message":"Successfully saved.",
             "timestamp_id": data.id,
             "second":second,
+            "created_at":data.created_at,
         })
     
     if request.method == 'DELETE':

@@ -23,6 +23,7 @@
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
                     <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
                     <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
+                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
                 </li>
             {% endfor %}
         </ul>
@@ -36,6 +37,7 @@
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
                     <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
                     <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
+                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
                 </li>
             {% endfor %}
         </ul>
@@ -49,6 +51,7 @@
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
                     <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
                     <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
+                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
                 </li>
             {% endfor %}
         </ul>
@@ -133,9 +136,28 @@
                     del_timestamp(del_btn.parentElement.getAttribute("data-id"));
                 };
 
+                function format_datetime(str) {
+                    const date = new Date(str);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    
+                    var hours = date.getHours();
+                    hours = hours % 12 ? hours % 12 : 12; // the hour '0' should be '12'
+                    var minutes = String(date.getMinutes()).padStart(2, '0');
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    
+                    return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
+                }
+
+                var created_at = document.createElement("div");
+                created_at.setAttribute("style", "font-size: small");
+                created_at.innerHTML = "created at: " + format_datetime(data.created_at);
+
                 li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
                 li.appendChild(play_btn);
                 li.appendChild(del_btn);
+                li.appendChild(created_at);
                 ul.appendChild(li);
             });
         }
