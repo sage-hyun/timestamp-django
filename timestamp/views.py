@@ -60,3 +60,12 @@ def memo(request):
 
 def marker(request):
     pass
+
+def timestamp(request, timestamp_id):
+    if request.method == 'DELETE':
+        ts = Timestamp.objects.get(id=timestamp_id)
+        ts.delete()
+
+        return JsonResponse({
+            "message":"Successfully deleted.",
+        })

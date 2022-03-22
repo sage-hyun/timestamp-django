@@ -22,7 +22,7 @@
             {% for ts in timestamps %}
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
                     <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
-                    <button class="del-btn">del</button>
+                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
                 </li>
             {% endfor %}
         </ul>
@@ -68,6 +68,23 @@
             myAudio.currentTime = parseInt(sec);
         }
 
+        function del_timestamp(id){
+            var confirmValue = confirm("Are you sure you want to delete?");
+            if (confirmValue === true && id) {
+                fetch("/timestamp/"+id, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRFToken": '{{csrf_token}}',
+                    },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    var elem = document.querySelector(`li[data-id="${id}"]`);
+                    elem.remove();
+                })
+            }
+        }
+
         const li_all = document.querySelectorAll("li");
         li_all.forEach(li => {
             var second = parseInt(li.getAttribute("data-second"));
@@ -106,6 +123,9 @@
                 var del_btn = document.createElement("button");
                 del_btn.setAttribute("class", "del-btn");
                 del_btn.innerHTML = "del";
+                del_btn.onclick = () => {
+                    del_timestamp(del_btn.parentElement.getAttribute("data-id"));
+                };
 
                 li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
                 li.appendChild(play_btn);

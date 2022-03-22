@@ -11,4 +11,5 @@ urlpatterns = [
     path('toc/', views.memo, name='toc'),
     path('memo/', views.memo, name='memo'),
     path('marker/', views.marker, name='marker'),
+    path('timestamp/<int:timestamp_id>/', views.timestamp, name='timestamp'),
 ]
