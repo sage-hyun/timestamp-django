@@ -18,6 +18,9 @@
         <button id="rewind-btn">rewind 10s</button>
         <span id="currentTime">00:00:00</span>
         <button id="forward-btn">forward 10s</button>
+        <div class="timeline">
+            <input id="progress-bar" type="range" min="0" max="100" value="0" style="width: 90vw;">
+        </div>
     </div>
     
     <div>
@@ -64,6 +67,8 @@
     
     <script>
         const myAudio = document.getElementById("myAudio"); // Audio객체 취득
+        const currentTime_text = document.getElementById("currentTime");
+        const progress_bar = document.getElementById("progress-bar");
         
         function formatSecondsAsTime(secs) {
             var hr  = String(Math.floor(secs / 3600)).padStart(2, '0');
@@ -74,8 +79,12 @@
         }
 
         myAudio.addEventListener('timeupdate', ()=>{
-            const currentTimeText = document.getElementById("currentTime");
-            currentTimeText.innerHTML = formatSecondsAsTime(myAudio.currentTime);
+            currentTime_text.innerHTML = formatSecondsAsTime(myAudio.currentTime);
+            progress_bar.value = (myAudio.currentTime / myAudio.duration) * 100
+        });
+
+        progress_bar.addEventListener('change', () => {
+            myAudio.currentTime = myAudio.duration * progress_bar.value / 100;
         });
 
         const rewind_btn = document.getElementById("rewind-btn");
