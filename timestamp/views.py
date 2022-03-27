@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Audio, Timestamp
+from .models import Audio, Timestamp, Memo
 import json
 
 # Create your views here.
@@ -19,7 +19,7 @@ def book(request, book_id):
         'book_filepath': book.filepath,
         'bookmarks': Timestamp.objects.filter(audio_id=book_id, stamp_type="BOOKMARK"),
         'favorites': Timestamp.objects.filter(audio_id=book_id, stamp_type="FAVORITE"),
-        'memos': Timestamp.objects.filter(audio_id=book_id, stamp_type="MEMO"),
+        'memos': Memo.objects.select_related('timestamp_id').filter(timestamp_id__audio_id=book_id),
     }
     return render(request, 'book/index.html', context)
 
@@ -40,6 +40,7 @@ def timestamp(request, timestamp_id=None):
         second = received_json_data['second']
         audio_id = received_json_data['audio_id']
         stamp_type = received_json_data['stamp_type']
+        content = received_json_data['content']
 
         data = Timestamp(
             second=second,
@@ -47,6 +48,10 @@ def timestamp(request, timestamp_id=None):
             stamp_type=stamp_type)
         data.save()
 
+        if content:
+            memo_data = Memo(timestamp_id=data, body=content)
+            memo_data.save()
+        
         return JsonResponse({
             "message":"Successfully saved.",
             "timestamp_id": data.id,
@@ -56,6 +61,9 @@ def timestamp(request, timestamp_id=None):
     
     if request.method == 'DELETE':
         ts = Timestamp.objects.get(id=timestamp_id)
+        if ts.stamp_type == "MEMO":
+            mem = Memo.objects.get(timestamp_id=timestamp_id)
+            mem.delete()
         ts.delete()
 
         return JsonResponse({

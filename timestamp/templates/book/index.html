@@ -54,13 +54,15 @@
 
     <div>
         <h3>Memo</h3>
+        <textarea name="memo-area" id="memo-area" cols="30" rows="5"></textarea>
         <button id="memo-add-btn">add</button>
         <ul class="memo">
-            {% for ts in memos %}
-                <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
+            {% for memo in memos %}
+                <li data-id="{{ memo.timestamp_id.id }}" data-second="{{ memo.timestamp_id.second }}">
                     <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
                     <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
-                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
+                    <div style="font-size:small">created at: {{ memo.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div>
+                    <div class="content">{{ memo.body }}</div>
                 </li>
             {% endfor %}
         </ul>
@@ -113,13 +115,18 @@
         const add_bookmark = document.getElementById("bookmark-add-btn");
         const add_favorite = document.getElementById("favorite-add-btn");
         const add_memo = document.getElementById("memo-add-btn");
+        const memo_area = document.getElementById("memo-area");
 
         add_bookmark.onclick = () => {create_timestamp("bookmark");}
         add_favorite.onclick = () => {create_timestamp("favorite");}
-        add_memo.onclick = () => {create_timestamp("memo");}
+        add_memo.onclick = () => {
+            var content = memo_area.value;
+            memo_area.value = "";
+            create_timestamp("memo", content);
+        }
         
         
-        function create_timestamp(stamp_type) {
+        function create_timestamp(stamp_type, content=null) {
             fetch("/timestamp/", {
                 method: "POST",
                 headers: {
@@ -130,6 +137,7 @@
                     audio_id: parseInt('{{ audio_id }}'),
                     second: Math.floor(myAudio.currentTime),
                     stamp_type: stamp_type.toUpperCase(),
+                    content: content,
                 }),
             })
             .then((response) => response.json())
@@ -176,6 +184,14 @@
                 li.appendChild(play_btn);
                 li.appendChild(del_btn);
                 li.appendChild(created_at);
+                
+                if (content) {
+                    var content_div = document.createElement("div");
+                    content_div.setAttribute("class", "content");
+                    content_div.innerHTML = content;
+                    li.appendChild(content_div);   
+                }
+
                 ul.appendChild(li);
             });
         }
