@@ -73,9 +73,6 @@ def timestamp(request, timestamp_id=None):
     
     if request.method == 'DELETE':
         ts = Timestamp.objects.get(id=timestamp_id)
-        if ts.stamp_type == "MEMO":
-            mem = Memo.objects.get(timestamp_id=timestamp_id)
-            mem.delete()
         ts.delete()
 
         return JsonResponse({
