@@ -140,7 +140,13 @@
                     content: content,
                 }),
             })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw new Error(data.error) })
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
             .then((data) => {
                 var ul = document.querySelector("ul." + stamp_type);
 
@@ -193,6 +199,9 @@
                 }
 
                 ul.appendChild(li);
+            })
+            .catch(e=>{
+                alert(e);
             });
         }
 

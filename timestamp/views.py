@@ -49,8 +49,15 @@ def timestamp(request, timestamp_id=None):
         data.save()
 
         if content:
-            memo_data = Memo(timestamp_id=data, body=content)
-            memo_data.save()
+            try:
+                memo_data = Memo(timestamp_id=data, body=content)
+                memo_data.save()
+            except Exception as e:
+                print(e)
+                data.delete()
+                return JsonResponse({
+                    "error":"Memo content was unable to be saved.",
+                }, status=500)
         
         return JsonResponse({
             "message":"Successfully saved.",
