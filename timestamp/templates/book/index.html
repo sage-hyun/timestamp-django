@@ -68,6 +68,21 @@
         </ul>
     </div>
     
+    <div>
+        <h3>Toc</h3>
+        <button id="toc-add-btn">add</button>
+        <ul class="toc">
+            {% for toc in tocs %}
+                <li data-id="{{ toc.timestamp_id.id }}" data-second="{{ toc.timestamp_id.second }}">
+                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
+                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
+                    <!-- <div style="font-size:small">created at: {{ toc.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div> -->
+                    <div class="content">{{ toc.content }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
     <script>
         const myAudio = document.getElementById("myAudio"); // Audio객체 취득
         const currentTime_text = document.getElementById("currentTime");
@@ -116,6 +131,7 @@
         const add_favorite = document.getElementById("favorite-add-btn");
         const add_memo = document.getElementById("memo-add-btn");
         const memo_area = document.getElementById("memo-area");
+        const add_toc = document.getElementById("toc-add-btn");
 
         add_bookmark.onclick = () => {create_timestamp("bookmark");}
         add_favorite.onclick = () => {create_timestamp("favorite");}
@@ -123,6 +139,11 @@
             var content = memo_area.value;
             memo_area.value = "";
             create_timestamp("memo", content);
+        }
+        add_toc.onclick = () => {
+            myAudio.pause()
+            var content = prompt("new table of content", "name")
+            create_timestamp("toc", content);
         }
         
         

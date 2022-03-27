@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Audio, Timestamp, Memo
+from .models import Audio, Timestamp, Memo, Toc
 import json
 
 # Create your views here.
@@ -20,6 +20,7 @@ def book(request, book_id):
         'bookmarks': Timestamp.objects.filter(audio_id=book_id, stamp_type="BOOKMARK"),
         'favorites': Timestamp.objects.filter(audio_id=book_id, stamp_type="FAVORITE"),
         'memos': Memo.objects.select_related('timestamp_id').filter(timestamp_id__audio_id=book_id),
+        'tocs': Toc.objects.select_related('timestamp_id').filter(timestamp_id__audio_id=book_id),
     }
     return render(request, 'book/index.html', context)
 
@@ -50,8 +51,12 @@ def timestamp(request, timestamp_id=None):
 
         if content:
             try:
-                memo_data = Memo(timestamp_id=data, body=content)
-                memo_data.save()
+                if stamp_type == "MEMO":
+                    memo_data = Memo(timestamp_id=data, body=content)
+                    memo_data.save()
+                elif stamp_type == "TOC":
+                    toc_data = Toc(timestamp_id=data, content=content)
+                    toc_data.save()
             except Exception as e:
                 print(e)
                 data.delete()
