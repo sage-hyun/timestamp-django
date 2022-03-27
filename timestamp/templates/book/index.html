@@ -18,6 +18,7 @@
         <button id="rewind-btn">rewind 10s</button>
         <span id="currentTime">00:00:00</span>
         <button id="forward-btn">forward 10s</button>
+        <button id="speed-btn">x1.0</button>
         <div class="timeline">
             <input id="progress-bar" type="range" min="0" max="100" value="0" style="width: 90vw;">
         </div>
@@ -89,8 +90,16 @@
 
         const rewind_btn = document.getElementById("rewind-btn");
         const forward_btn = document.getElementById("forward-btn");
+        const speed_btn = document.getElementById("speed-btn");
         rewind_btn.onclick = () => {myAudio.currentTime -= 10;}
         forward_btn.onclick = () => {myAudio.currentTime += 10;}
+        speed_btn.onclick = () => {
+            myAudio.playbackRate += 0.2;
+            if (myAudio.playbackRate > 2.0) {
+                myAudio.playbackRate = 0.8;
+            }
+            speed_btn.innerHTML = `x${myAudio.playbackRate.toFixed(1)}`;
+        }
 
         
         const li_all = document.querySelectorAll("li");
