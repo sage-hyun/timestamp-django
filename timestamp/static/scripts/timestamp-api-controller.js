@@ -1,4 +1,4 @@
-import { formatSecondsAsTime, play_second } from "./playback-controller.js";
+import { formatSecondsAsTime, liPlayButton, liDeleteButton } from "./playback-controller.js";
 
 export function create_timestamp(stamp_type, content=null) {
     fetch("/timestamp/", {
@@ -27,20 +27,6 @@ export function create_timestamp(stamp_type, content=null) {
         li.setAttribute("data-id", data.timestamp_id);
         li.setAttribute("data-second", data.second);
 
-        var play_btn = document.createElement("button");
-        play_btn.setAttribute("class", "play-btn");
-        play_btn.innerHTML = "play";
-        play_btn.onclick = () => {
-            play_second(play_btn.parentElement.getAttribute("data-second"));
-        };
-        
-        var del_btn = document.createElement("button");
-        del_btn.setAttribute("class", "del-btn");
-        del_btn.innerHTML = "del";
-        del_btn.onclick = () => {
-            del_timestamp(del_btn.parentElement.getAttribute("data-id"));
-        };
-
         function format_datetime(str) {
             const date = new Date(str);
             const year = date.getFullYear();
@@ -60,8 +46,8 @@ export function create_timestamp(stamp_type, content=null) {
         created_at.innerHTML = "created at: " + format_datetime(data.created_at);
 
         li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
-        li.appendChild(play_btn);
-        li.appendChild(del_btn);
+        li.appendChild(liPlayButton());
+        li.appendChild(liDeleteButton());
         li.appendChild(created_at);
         
         if (content) {

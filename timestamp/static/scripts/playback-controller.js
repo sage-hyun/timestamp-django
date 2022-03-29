@@ -1,3 +1,5 @@
+import { del_timestamp } from "./timestamp-api-controller.js";
+
 export function formatSecondsAsTime(secs) {
     var hr  = String(Math.floor(secs / 3600)).padStart(2, '0');
     var min = String(Math.floor((secs - (hr * 3600))/60)).padStart(2, '0');
@@ -6,8 +8,25 @@ export function formatSecondsAsTime(secs) {
     return hr + ':' + min + ':' + sec;
 }
 
-export function play_second(sec){
-    myAudio.currentTime = parseInt(sec);
+export function liPlayButton() {
+    var play_btn = document.createElement("button");
+    play_btn.setAttribute("class", "play-btn");
+    play_btn.innerHTML = "play";
+    play_btn.onclick = () => {
+        var sec = play_btn.parentElement.getAttribute("data-second");
+        myAudio.currentTime = parseInt(sec);
+    };
+    return play_btn;
+}
+
+export function liDeleteButton(){
+    var del_btn = document.createElement("button");
+    del_btn.setAttribute("class", "del-btn");
+    del_btn.innerHTML = "del";
+    del_btn.onclick = () => {
+        del_timestamp(del_btn.parentElement.getAttribute("data-id"));
+    };
+    return del_btn;
 }
 
 
@@ -40,6 +59,9 @@ speed_btn.onclick = () => {
 // format seconds of every <li>
 const li_all = document.querySelectorAll("li");
 li_all.forEach(li => {
+    li.prepend(liDeleteButton());
+    li.prepend(liPlayButton());
+
     var second = parseInt(li.getAttribute("data-second"));
     var timestamp_str = formatSecondsAsTime(second);
     li.prepend(document.createTextNode(timestamp_str));

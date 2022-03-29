@@ -30,8 +30,6 @@
         <ul class="bookmark">
             {% for ts in bookmarks %}
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
-                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
-                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
                     <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
                 </li>
             {% endfor %}
@@ -44,8 +42,6 @@
         <ul class="favorite">
             {% for ts in favorites %}
                 <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
-                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
-                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
                     <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
                 </li>
             {% endfor %}
@@ -59,8 +55,6 @@
         <ul class="memo">
             {% for memo in memos %}
                 <li data-id="{{ memo.timestamp_id.id }}" data-second="{{ memo.timestamp_id.second }}">
-                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
-                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
                     <div style="font-size:small">created at: {{ memo.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div>
                     <div class="content">{{ memo.body }}</div>
                 </li>
@@ -74,8 +68,6 @@
         <ul class="toc">
             {% for toc in tocs %}
                 <li data-id="{{ toc.timestamp_id.id }}" data-second="{{ toc.timestamp_id.second }}">
-                    <button class="play-btn" onclick="play_second(this.parentElement.getAttribute('data-second'))">play</button>
-                    <button class="del-btn" onclick="del_timestamp(this.parentElement.getAttribute('data-id'))">del</button>
                     <!-- <div style="font-size:small">created at: {{ toc.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div> -->
                     <div class="content">{{ toc.content }}</div>
                 </li>
