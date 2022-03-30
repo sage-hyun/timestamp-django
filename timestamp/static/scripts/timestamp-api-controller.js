@@ -61,6 +61,7 @@ export function create_timestamp(stamp_type, content=null) {
         }
 
         ul.appendChild(li);
+        sortTimestampByAttribute("data-second", "marker");
     })
     .catch(e=>{
         alert(e);

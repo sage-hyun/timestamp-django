@@ -29,6 +29,14 @@ export function liDeleteButton(){
     return del_btn;
 }
 
+export function sortTimestampByAttribute(attribute, stamp_type) {
+    var li = document.querySelectorAll(`ul.${stamp_type} li`);
+
+    Array.from(li).sort((a, b) => 
+        parseInt(a.getAttribute(attribute)) > parseInt(b.getAttribute(attribute)) ? 1 : -1
+    )
+    .forEach(elem => elem.parentNode.appendChild(elem));
+}
 
 const myAudio = document.getElementById("myAudio"); // Audio객체 취득
 const currentTime_text = document.getElementById("currentTime");
@@ -55,6 +63,9 @@ speed_btn.onclick = () => {
     }
     speed_btn.innerHTML = `x${myAudio.playbackRate.toFixed(1)}`;
 }
+
+// sort <li> by seconds
+sortTimestampByAttribute("data-second", "marker");
 
 // format seconds of every <li>
 const li_all = document.querySelectorAll("li");
