@@ -49,9 +49,10 @@ export function create_timestamp(stamp_type, content=null) {
         li.appendChild(liPlayButton());
         li.appendChild(liDeleteButton());
 
-        if (stamp_type != "TOC" && stamp_type != "MARKER")
-        li.appendChild(created_at);
-        
+        if (stamp_type != "toc" && stamp_type != "marker"){
+            li.appendChild(created_at);
+        }
+
         if (content) {
             var content_div = document.createElement("div");
             content_div.setAttribute("class", "content");
