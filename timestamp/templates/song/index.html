@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ song_title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/song.css' %}">
+</head>
+<body>
+    <h1>{{ song_title }}</h1>
+    <audio src="{{song_filepath}}" id="myAudio" controls></audio>
+
+    <div class="controller">
+        <button id="rewind-btn">rewind 10s</button>
+        <span id="currentTime">00:00:00</span>
+        <button id="forward-btn">forward 10s</button>
+        <button id="speed-btn">x1.0</button>
+    </div>
+
+    <div>
+        <h3>Marker</h3>
+        <button id="marker-add-btn">add</button>
+        <ul class="marker">
+            {% for ts in timestamps %}
+                <li data-id="{{ ts.id }}" data-second="{{ ts.second }}"></li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <script>
+        let csrf_token = '{{csrf_token}}';
+        let audio_id = '{{audio_id}}';
+    </script>
+    <script type="module" src="{% static 'scripts/song/main.js' %}"></script>
+    <script type="module" src="{% static 'scripts/playback-controller.js' %}"></script>
+    <script type="module" src="{% static 'scripts/timestamp-api-controller.js' %}"></script>
+</body>
+</html>

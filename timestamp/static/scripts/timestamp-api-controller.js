@@ -48,6 +48,8 @@ export function create_timestamp(stamp_type, content=null) {
         li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
         li.appendChild(liPlayButton());
         li.appendChild(liDeleteButton());
+
+        if (stamp_type != "TOC" && stamp_type != "MARKER")
         li.appendChild(created_at);
         
         if (content) {
