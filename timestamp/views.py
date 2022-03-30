@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Audio, Timestamp, Memo, Toc
+
+from .models import Audio, Timestamp, Memo, Toc, Lyric
+from timestamp.utils.lyric_eng_kor_seperation import eng_kor_seperation
+
 import json
 
 # Create your views here.
@@ -78,3 +81,14 @@ def timestamp(request, timestamp_id=None):
         return JsonResponse({
             "message":"Successfully deleted.",
         })
+
+def lyric(request, song_id=None):
+    lyric = get_object_or_404(Lyric, audio_id=song_id)
+
+    full_lyrics = lyric.full_lyrics
+    lyrics_eng, lyrics_kor = eng_kor_seperation(full_lyrics)
+
+    return JsonResponse({
+        "lyrics_eng": lyrics_eng,
+        "lyrics_kor": lyrics_kor,
+    })

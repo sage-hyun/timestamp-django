@@ -8,4 +8,5 @@ urlpatterns = [
     path('song/<int:song_id>/', views.song, name='song'),
     path('timestamp/', views.timestamp, name='create_timestamp'),
     path('timestamp/<int:timestamp_id>/', views.timestamp, name='edit_timestamp'),
+    path('lyric/<int:song_id>/', views.lyric, name='lyric'),
 ]
