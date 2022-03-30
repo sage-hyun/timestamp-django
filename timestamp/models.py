@@ -12,7 +12,7 @@ class Audio(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Timestamp(models.Model):
-    second = models.IntegerField()
+    second = models.FloatField()
     audio_id = models.ForeignKey(Audio, on_delete=models.CASCADE)
     stamp_type = models.CharField(
         max_length=10, 

@@ -1,9 +1,14 @@
-export function formatSecondsAsTime(secs) {
+export function formatSecondsAsTime(secs, showDecimalPoint=false) {
     var hr  = String(Math.floor(secs / 3600)).padStart(2, '0');
     var min = String(Math.floor((secs - (hr * 3600))/60)).padStart(2, '0');
     var sec = String(Math.floor(secs - (hr * 3600) -  (min * 60))).padStart(2, '0');
     
-    return hr + ':' + min + ':' + sec;
+    if (showDecimalPoint) {
+        var secAfterDecimalPoint = (secs - Math.floor(secs)).toFixed(3).substring(1);
+        return hr + ':' + min + ':' + sec + secAfterDecimalPoint;
+    } else {
+        return hr + ':' + min + ':' + sec;
+    }
 }
 
 const myAudio = document.getElementById("myAudio"); // Audio객체 취득

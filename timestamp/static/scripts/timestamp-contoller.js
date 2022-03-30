@@ -7,7 +7,7 @@ export function liPlayButton() {
     play_btn.innerHTML = "play";
     play_btn.onclick = () => {
         var sec = play_btn.parentElement.getAttribute("data-second");
-        myAudio.currentTime = parseInt(sec);
+        myAudio.currentTime = parseFloat(sec);
     };
     return play_btn;
 }
@@ -26,7 +26,7 @@ export function sortTimestampByAttribute(attribute, stamp_type) {
     var li = document.querySelectorAll(`ul.${stamp_type} li`);
 
     Array.from(li).sort((a, b) => 
-        parseInt(a.getAttribute(attribute)) > parseInt(b.getAttribute(attribute)) ? 1 : -1
+        parseFloat(a.getAttribute(attribute)) > parseFloat(b.getAttribute(attribute)) ? 1 : -1
     )
     .forEach(elem => elem.parentNode.appendChild(elem));
 }
@@ -36,12 +36,15 @@ export function sortTimestampByAttribute(attribute, stamp_type) {
 sortTimestampByAttribute("data-second", "marker");
 
 // format seconds of every <li>
-const li_all = document.querySelectorAll("li");
-li_all.forEach(li => {
-    li.prepend(liDeleteButton());
-    li.prepend(liPlayButton());
-
-    var second = parseInt(li.getAttribute("data-second"));
-    var timestamp_str = formatSecondsAsTime(second);
-    li.prepend(document.createTextNode(timestamp_str));
-});
+const ul_all = document.querySelectorAll("ul");
+ul_all.forEach(ul => {
+    const li_all = ul.querySelectorAll("li");
+    li_all.forEach(li => {
+        li.prepend(liDeleteButton());
+        li.prepend(liPlayButton());
+    
+        var second = parseFloat(li.getAttribute("data-second"));
+        var timestamp_str = formatSecondsAsTime(second, ul.className === "marker");
+        li.prepend(document.createTextNode(timestamp_str));
+    });
+})

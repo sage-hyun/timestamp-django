@@ -10,7 +10,7 @@ export function create_timestamp(stamp_type, content=null) {
         },
         body: JSON.stringify({
             audio_id: parseInt(audio_id),
-            second: Math.floor(myAudio.currentTime),
+            second: myAudio.currentTime.toFixed(3),
             stamp_type: stamp_type.toUpperCase(),
             content: content,
         }),
@@ -46,7 +46,7 @@ export function create_timestamp(stamp_type, content=null) {
         created_at.setAttribute("style", "font-size: small");
         created_at.innerHTML = "created at: " + format_datetime(data.created_at);
 
-        li.appendChild(document.createTextNode(formatSecondsAsTime(data.second)));
+        li.appendChild(document.createTextNode(formatSecondsAsTime(data.second, stamp_type === "marker")));
         li.appendChild(liPlayButton());
         li.appendChild(liDeleteButton());
 
