@@ -1,0 +1,45 @@
+h1 {
+    display:inline-block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: -0.5px;
+
+    background: linear-gradient(to right, #2f3a6d, #2eadfd);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+audio{
+    display: block;
+}
+#lyric-panel{
+    border-radius: 20px;
+    box-shadow: 2px 3px 15px rgb(163, 162, 162);
+    background: linear-gradient(to right, #2f3a6d, #2eadfd);
+    display: flex;
+    align-items: center;
+    height: 220px;
+    width: 380px;
+    padding: 0 50px;
+    margin-top: 20px;
+}
+
+#shown-lyric-eng {
+    font-size:x-large;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: -0.5px;
+    
+    transition: opacity 0.2s;
+}
+
+#shown-lyric-kor {
+    font-size:small;
+    font-weight: 200;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: -0.5px;
+
+    transition: opacity 0.2s;
+}

@@ -24,6 +24,13 @@
     <input id="progress-bar" type="range" min="0" max="100" value="0" step="0.01">
     <div id="marker-timeline" style="position: relative; margin-left: 3px; height:5px"></div>
 
+    <div id="lyric-panel">
+        <div>
+            <div id="shown-lyric-eng"></div>
+            <div id="shown-lyric-kor"></div>
+        </div>
+    </div>
+
     <div>
         <h3>Marker</h3>
         <button id="marker-add-btn">add</button>
@@ -37,6 +44,8 @@
     <script>
         let csrf_token = '{{csrf_token}}';
         let audio_id = '{{audio_id}}';
+        var lyrics_eng, lyrics_kor;
+        var seconds_flat = [];
     </script>
     <script type="module" src="{% static 'scripts/song/main.js' %}"></script>
     <script type="module" src="{% static 'scripts/playback-controller.js' %}"></script>
