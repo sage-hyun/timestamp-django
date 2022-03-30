@@ -1,4 +1,5 @@
-import { formatSecondsAsTime, liPlayButton, liDeleteButton } from "./playback-controller.js";
+import { formatSecondsAsTime } from "./playback-controller.js";
+import { liPlayButton, liDeleteButton, sortTimestampByAttribute } from "./timestamp-contoller.js"
 
 export function create_timestamp(stamp_type, content=null) {
     fetch("/timestamp/", {
