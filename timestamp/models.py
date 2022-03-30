@@ -32,3 +32,10 @@ class Toc(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Lyric(models.Model):
+    audio_id = models.ForeignKey(Audio, on_delete=models.CASCADE)
+    full_lyrics = models.TextField()
+    draft = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
