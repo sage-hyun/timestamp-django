@@ -24,9 +24,22 @@ progress_bar.addEventListener('change', () => {
     myAudio.currentTime = myAudio.duration * progress_bar.value / 100;
 });
 
+const play_toggle_btn = document.getElementById("play-toggle-btn");
 const rewind_btn = document.getElementById("rewind-btn");
 const forward_btn = document.getElementById("forward-btn");
 const speed_btn = document.getElementById("speed-btn");
+
+play_toggle_btn.onclick = () => {
+    if (myAudio.paused) {
+        myAudio.play();
+        play_toggle_btn.classList.remove("play-icon");
+        play_toggle_btn.classList.add("pause-icon");
+    } else {
+        myAudio.pause();
+        play_toggle_btn.classList.remove("pause-icon");
+        play_toggle_btn.classList.add("play-icon");
+    }
+}
 rewind_btn.onclick = () => {myAudio.currentTime -= 10;}
 forward_btn.onclick = () => {myAudio.currentTime += 10;}
 speed_btn.onclick = () => {
