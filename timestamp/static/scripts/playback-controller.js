@@ -13,8 +13,12 @@ export function formatSecondsAsTime(secs, showDecimalPoint=false) {
 
 const myAudio = document.getElementById("myAudio"); // Audio객체 취득
 const currentTime_text = document.getElementById("currentTime");
+const duration_text = document.getElementById("duration");
 const progress_bar = document.getElementById("progress-bar");
 
+myAudio.addEventListener('loadeddata', ()=> {
+    duration_text.innerHTML = formatSecondsAsTime(myAudio.duration);
+})
 myAudio.addEventListener('timeupdate', ()=>{
     currentTime_text.innerHTML = formatSecondsAsTime(myAudio.currentTime);
     progress_bar.value = (myAudio.currentTime / myAudio.duration) * 100;
