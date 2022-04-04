@@ -12,26 +12,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/book.css' %}">
 </head>
 <body>
-    <header class="page-header">
-        <h1>{{ book_title }}</h1>
-        {% if book_artist %}
-            <h2>by {{ book_artist }}</h2>
-        {% endif %}
-    </header>
-
     <audio src="{{book_filepath}}" id="myAudio" preload="auto"></audio>
 
-    <div class="timeline">
+    <header class="page-header">
+        <div class="text-container">
+            <h1>{{ book_title }}</h1>
+            {% if book_artist %}
+                <h2>by {{ book_artist }}</h2>
+            {% endif %}
+        </div>      
+
         <input id="progress-bar" type="range" min="0" max="100" value="0">
-    </div>
-    <div class="controller">
-        <button id="play-toggle-btn" class="play-icon"></button>
-        <span id="currentTime">00:00:00</span> / <span id="duration">00:00:00</span>
-        <button id="rewind-btn">rewind 10s</button>
-        <button id="forward-btn">forward 10s</button>
-        <button id="speed-btn">x1.0</button>
-    </div>
-    
+
+        <div class="controller">
+            <button id="play-toggle-btn" class="play-icon"></button>
+            <span id="currentTime">00:00:00</span> / <span id="duration">00:00:00</span>
+            <button id="rewind-btn">rewind 10s</button>
+            <button id="forward-btn">forward 10s</button>
+            <button id="speed-btn">x1.0</button>
+        </div>
+    </header>
+
     <main>
         <section class="bookmark">
             <header>
