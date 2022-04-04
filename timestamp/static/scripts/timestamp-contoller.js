@@ -1,7 +1,7 @@
 import { del_timestamp } from "./timestamp-api-controller.js";
 import { formatSecondsAsTime } from "./playback-controller.js";
 
-export function liPlayButton() {
+function liPlayButton() {
     var play_btn = document.createElement("button");
     play_btn.setAttribute("class", "play-btn");
     play_btn.innerHTML = "▶";
@@ -12,7 +12,7 @@ export function liPlayButton() {
     return play_btn;
 }
 
-export function liDeleteButton(){
+function liDeleteButton(){
     var del_btn = document.createElement("button");
     del_btn.setAttribute("class", "del-btn");
     del_btn.innerHTML = "✖";
@@ -20,6 +20,21 @@ export function liDeleteButton(){
         del_timestamp(del_btn.parentElement.parentElement.getAttribute("data-id"));
     };
     return del_btn;
+}
+
+export function createTsContainer(second, stamp_type){
+    var ts_container = document.createElement("div");
+    ts_container.setAttribute("class", "ts-container");
+
+    ts_container.append(liPlayButton());
+
+    var timestamp_str = document.createElement("span");
+    timestamp_str.innerHTML = formatSecondsAsTime(second, stamp_type === "marker");
+    ts_container.append(timestamp_str);
+
+    ts_container.append(liDeleteButton());
+
+    return ts_container;
 }
 
 export function sortTimestampByAttribute(attribute, stamp_type) {
@@ -35,16 +50,15 @@ export function sortTimestampByAttribute(attribute, stamp_type) {
 // sort <li> by seconds
 sortTimestampByAttribute("data-second", "marker");
 
-// format seconds of every <li>
+// create ts-container for every <li>
 const ul_all = document.querySelectorAll("ul");
 ul_all.forEach(ul => {
     const li_all = ul.querySelectorAll("li");
     li_all.forEach(li => {
-        li.prepend(liDeleteButton());
-        li.prepend(liPlayButton());
-    
         var second = parseFloat(li.getAttribute("data-second"));
-        var timestamp_str = formatSecondsAsTime(second, ul.className === "marker");
-        li.prepend(document.createTextNode(timestamp_str));
+        var stamp_type = ul.parentElement.className;
+
+        var ts_container = createTsContainer(second, stamp_type);
+        li.prepend(ts_container);
     });
 })

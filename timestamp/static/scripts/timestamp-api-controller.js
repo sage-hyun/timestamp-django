@@ -1,5 +1,4 @@
-import { formatSecondsAsTime } from "./playback-controller.js";
-import { liPlayButton, liDeleteButton, sortTimestampByAttribute } from "./timestamp-contoller.js"
+import { createTsContainer, sortTimestampByAttribute } from "./timestamp-contoller.js"
 
 export function create_timestamp(stamp_type, content=null) {
     fetch("/timestamp/", {
@@ -28,6 +27,19 @@ export function create_timestamp(stamp_type, content=null) {
         li.setAttribute("data-id", data.timestamp_id);
         li.setAttribute("data-second", data.second);
 
+        // ts-container
+        var ts_container = createTsContainer(data.second, stamp_type);
+        li.appendChild(ts_container);
+        
+        // content
+        if (content) {
+            var content_div = document.createElement("div");
+            content_div.setAttribute("class", "content");
+            content_div.innerHTML = content;
+            li.appendChild(content_div);   
+        }
+
+        // created-at
         function format_datetime(str) {
             const date = new Date(str);
             const year = date.getFullYear();
@@ -46,19 +58,8 @@ export function create_timestamp(stamp_type, content=null) {
         created_at.setAttribute("class", "created-at");
         created_at.innerHTML = "created at: " + format_datetime(data.created_at);
 
-        li.appendChild(document.createTextNode(formatSecondsAsTime(data.second, stamp_type === "marker")));
-        li.appendChild(liPlayButton());
-        li.appendChild(liDeleteButton());
-
         if (stamp_type != "toc" && stamp_type != "marker"){
             li.appendChild(created_at);
-        }
-
-        if (content) {
-            var content_div = document.createElement("div");
-            content_div.setAttribute("class", "content");
-            content_div.innerHTML = content;
-            li.appendChild(content_div);   
         }
 
         ul.appendChild(li);
