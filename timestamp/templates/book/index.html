@@ -12,7 +12,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/book.css' %}">
 </head>
 <body>
-    <h1>{{ book_title }}</h1>
+    <header class="page-header">
+        <h1>{{ book_title }}</h1>
+        {% if book_artist %}
+            <h2>by {{ book_artist }}</h2>
+        {% endif %}
+    </header>
+
     <audio src="{{book_filepath}}" id="myAudio" preload="auto"></audio>
 
     <div class="timeline">

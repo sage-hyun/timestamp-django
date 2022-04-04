@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Audio(models.Model):
     title = models.CharField(max_length=200)
+    artist = models.CharField(max_length=200, blank=True, null=True)
     filepath = models.CharField(max_length=200)
     media_type = models.CharField(
         max_length=10, 

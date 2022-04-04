@@ -19,6 +19,7 @@ def book(request, book_id):
     context = {
         'audio_id': book_id,
         'book_title': book.title,
+        'book_artist': book.artist,
         'book_filepath': book.filepath,
         'bookmarks': Timestamp.objects.filter(audio_id=book_id, stamp_type="BOOKMARK"),
         'favorites': Timestamp.objects.filter(audio_id=book_id, stamp_type="FAVORITE"),
@@ -32,6 +33,7 @@ def song(request, song_id):
     context = {
         'audio_id': song_id,
         'song_title': song.title,
+        'song_artist': song.artist,
         'song_filepath': song.filepath,
         'timestamps': Timestamp.objects.filter(audio_id=song_id)
     }

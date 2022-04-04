@@ -9,10 +9,22 @@ body {
     align-items: center;
 }
 
-h1 {
+.page-header {
+    position: relative;
+    margin: 5rem 1.5rem 3rem;
+    padding-bottom: 2.5rem;
+}
+.page-header h1 {
     font-size: 3rem;
     letter-spacing: -0.5px;
-    padding: 50px;
+}
+.page-header h2 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 1.4rem;
+    /* letter-spacing: -0.5px; */
+    font-weight: 300;
 }
 
 /* playback */
