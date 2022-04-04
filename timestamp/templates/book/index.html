@@ -8,21 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ book_title }}</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'book/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/book.css' %}">
 </head>
 <body>
     <h1>{{ book_title }}</h1>
     <audio src="{{book_filepath}}" id="myAudio" preload="auto"></audio>
 
+    <div class="timeline">
+        <input id="progress-bar" type="range" min="0" max="100" value="0">
+    </div>
     <div class="controller">
-        <button id="rewind-btn">rewind 10s</button>
-        <button id="play-toggle-btn" class="play-icon">play/pause</button>
+        <button id="play-toggle-btn" class="play-icon"></button>
         <span id="currentTime">00:00:00</span> / <span id="duration">00:00:00</span>
+        <button id="rewind-btn">rewind 10s</button>
         <button id="forward-btn">forward 10s</button>
         <button id="speed-btn">x1.0</button>
-        <div class="timeline">
-            <input id="progress-bar" type="range" min="0" max="100" value="0" style="width: 90vw;">
-        </div>
     </div>
     
     <div>
