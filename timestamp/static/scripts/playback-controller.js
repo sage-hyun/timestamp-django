@@ -33,8 +33,14 @@ play_toggle_btn.onclick = () => {
         play_toggle_btn.classList.add("play-icon");
     }
 }
-rewind_btn.onclick = () => {myAudio.currentTime -= 10;}
-forward_btn.onclick = () => {myAudio.currentTime += 10;}
+rewind_btn.onclick = () => {
+    var offset = document.getElementById("offset");
+    myAudio.currentTime -= parseInt(offset.value);
+}
+forward_btn.onclick = () => {
+    var offset = document.getElementById("offset");
+    myAudio.currentTime += parseInt(offset.value);
+}
 speed_btn.onclick = () => {
     myAudio.playbackRate += 0.2;
     if (myAudio.playbackRate > 2.0) {
