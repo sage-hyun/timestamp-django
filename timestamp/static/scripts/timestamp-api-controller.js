@@ -1,4 +1,5 @@
 import { createTsContainer, sortTimestampByAttribute } from "./timestamp-contoller.js"
+import { formatDatetime } from "./time-formatter.js"
 
 export function create_timestamp(stamp_type, content=null) {
     fetch("/timestamp/", {
@@ -40,25 +41,10 @@ export function create_timestamp(stamp_type, content=null) {
         }
 
         // created-at
-        function format_datetime(str) {
-            const date = new Date(str);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            
-            var hours = date.getHours();
-            var ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 ? hours % 12 : 12; // the hour '0' should be '12'
-            var minutes = String(date.getMinutes()).padStart(2, '0');
-            
-            return `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
-        }
-
-        var created_at = document.createElement("div");
-        created_at.setAttribute("class", "created-at");
-        created_at.innerHTML = "created at: " + format_datetime(data.created_at);
-
-        if (stamp_type != "toc" && stamp_type != "marker"){
+        if (stamp_type != "toc" && stamp_type != "marker") {
+            var created_at = document.createElement("div");
+            created_at.setAttribute("class", "created-at");
+            created_at.innerHTML = "created at: " + formatDatetime(data.created_at);
             li.appendChild(created_at);
         }
 

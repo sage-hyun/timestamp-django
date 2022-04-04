@@ -1,5 +1,5 @@
 import { del_timestamp } from "./timestamp-api-controller.js";
-import { formatSecondsAsTime } from "./playback-controller.js";
+import { formatSecondsAsTime } from "./time-formatter.js"
 
 function liPlayButton() {
     var play_btn = document.createElement("button");
