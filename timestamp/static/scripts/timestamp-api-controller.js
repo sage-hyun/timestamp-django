@@ -22,7 +22,7 @@ export function create_timestamp(stamp_type, content=null) {
         return response.json();
     })
     .then((data) => {
-        var ul = document.querySelector("ul." + stamp_type);
+        var ul = document.querySelector(`section.${stamp_type} ul`);
 
         var li = document.createElement("li");
         li.setAttribute("data-id", data.timestamp_id);
@@ -43,7 +43,7 @@ export function create_timestamp(stamp_type, content=null) {
         }
 
         var created_at = document.createElement("div");
-        created_at.setAttribute("style", "font-size: small");
+        created_at.setAttribute("class", "created-at");
         created_at.innerHTML = "created at: " + format_datetime(data.created_at);
 
         li.appendChild(document.createTextNode(formatSecondsAsTime(data.second, stamp_type === "marker")));

@@ -26,56 +26,68 @@
         <button id="speed-btn">x1.0</button>
     </div>
     
-    <div>
-        <h3>Bookmark</h3>
-        <button id="bookmark-add-btn">add</button>
-        <ul class="bookmark">
-            {% for ts in bookmarks %}
-                <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
-                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h3>Favorite</h3>
-        <button id="favorite-add-btn">add</button>
-        <ul class="favorite">
-            {% for ts in favorites %}
-                <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
-                    <div style="font-size:small">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h3>Memo</h3>
-        <textarea name="memo-area" id="memo-area" cols="30" rows="5"></textarea>
-        <button id="memo-add-btn">add</button>
-        <ul class="memo">
-            {% for memo in memos %}
-                <li data-id="{{ memo.timestamp_id.id }}" data-second="{{ memo.timestamp_id.second }}">
-                    <div style="font-size:small">created at: {{ memo.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div>
-                    <div class="content">{{ memo.body }}</div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <main>
+        <section class="bookmark">
+            <header>
+                <h3>Bookmark</h3>
+                <button id="bookmark-add-btn">+<img class="add-icon" src="{% static 'icons/bookmark-ribbon.png' %}" alt="add"></button>
+            </header>
+            <ul>
+                {% for ts in bookmarks %}
+                    <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
+                        <div class="created-at">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
     
-    <div>
-        <h3>Toc</h3>
-        <button id="toc-add-btn">add</button>
-        <ul class="toc">
-            {% for toc in tocs %}
-                <li data-id="{{ toc.timestamp_id.id }}" data-second="{{ toc.timestamp_id.second }}">
-                    <!-- <div style="font-size:small">created at: {{ toc.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div> -->
-                    <div class="content">{{ toc.content }}</div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+        <section class="favorite">
+            <header>
+                <h3>Favorite</h3>
+                <button id="favorite-add-btn"><img class="add-icon" src="{% static 'icons/hearts---v1.png' %}" alt="add"></button>
+            </header>
+            <ul>
+                {% for ts in favorites %}
+                    <li data-id="{{ ts.id }}" data-second="{{ ts.second }}">
+                        <div class="created-at">created at: {{ ts.created_at|date:"Y-m-d h:i A" }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    
+        <section class="memo">
+            <header>
+                <h3>Memo</h3>
+            </header>
+            <div class="new-memo">
+                <textarea name="memo-area" id="memo-area" cols="30" rows="5"></textarea>
+                <button id="memo-add-btn">ADD</button>
+            </div>
+            <ul>
+                {% for memo in memos %}
+                    <li data-id="{{ memo.timestamp_id.id }}" data-second="{{ memo.timestamp_id.second }}">
+                        <div class="content">{{ memo.body }}</div>
+                        <div class="created-at">created at: {{ memo.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        
+        <section class="toc">
+            <header>
+                <h3>TOC</h3>
+                <button id="toc-add-btn"><img class="add-icon" src="{% static 'icons/icons8-plus-64.png' %}" alt="add"></button>
+            </header>
+            <ul>
+                {% for toc in tocs %}
+                    <li data-id="{{ toc.timestamp_id.id }}" data-second="{{ toc.timestamp_id.second }}">
+                        <!-- <div style="font-size:small">created at: {{ toc.timestamp_id.created_at|date:"Y-m-d h:i A" }}</div> -->
+                        <div class="content">{{ toc.content }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
 
     <script>
         let csrf_token = '{{csrf_token}}';
@@ -85,5 +97,5 @@
     <script type="module" src="{% static 'scripts/playback-controller.js' %}"></script>
     <script type="module" src="{% static 'scripts/timestamp-api-controller.js' %}"></script>
 
-    </body>
+</body>
 </html>
