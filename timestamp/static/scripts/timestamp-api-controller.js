@@ -1,4 +1,4 @@
-import { createTsContainer, sortTimestampByAttribute } from "./timestamp-contoller.js"
+import { createTsContainer, sortTimestampByAttribute } from "./timestamp-controller.js"
 import { formatDatetime } from "./time-formatter.js"
 
 export function create_timestamp(stamp_type, content=null) {
