@@ -14,7 +14,6 @@ add_memo.onclick = () => {
     create_timestamp("memo", content);
 }
 add_toc.onclick = () => {
-    myAudio.pause()
     var content = prompt("new table of content", "name")
     create_timestamp("toc", content);
 }

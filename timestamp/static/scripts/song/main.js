@@ -1,6 +1,8 @@
 import { get_lyrics } from "../lyric-api-controller.js";
 import { create_timestamp } from "../timestamp-api-controller.js";
 
+const myAudio = document.getElementById("myAudio");
+
 const add_marker = document.getElementById("marker-add-btn");
 const marker_timeline = document.getElementById("marker-timeline");
 const progress_bar = document.getElementById("progress-bar");

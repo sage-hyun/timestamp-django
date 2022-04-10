@@ -2,6 +2,8 @@ import { createTsContainer, sortTimestampByAttribute } from "./timestamp-control
 import { formatDatetime } from "./time-formatter.js"
 
 export function create_timestamp(stamp_type, content=null) {
+    const myAudio = document.getElementById("myAudio");
+
     fetch("/timestamp/", {
         method: "POST",
         headers: {

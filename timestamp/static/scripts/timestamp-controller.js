@@ -6,6 +6,7 @@ function liPlayButton() {
     play_btn.setAttribute("class", "play-btn");
     play_btn.innerHTML = "▶";
     play_btn.onclick = () => {
+        const myAudio = document.getElementById("myAudio");
         var sec = play_btn.parentElement.parentElement.getAttribute("data-second");
         myAudio.currentTime = parseFloat(sec);
     };
